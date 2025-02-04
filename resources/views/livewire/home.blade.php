@@ -36,6 +36,9 @@
           @endfor
       </ul>
     </section>
+    <section class="mt-5 p-2 space-y-4">
+      @livewire('post.item')
+    </section>
   </aside>
 
 
