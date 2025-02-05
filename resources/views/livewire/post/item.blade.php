@@ -17,4 +17,7 @@
                 </div>
             </div>
         </header>
+        <main>
+            @include('components.video',['controls' => true])
+        </main>
 </div>
