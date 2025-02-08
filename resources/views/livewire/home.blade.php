@@ -37,7 +37,11 @@
       </ul>
     </section>
     <section class="mt-5 p-2 space-y-4">
-      @livewire('post.item')
+      @forelse ($posts->take(10) as $post)
+        @livewire('post.item',['post' => $post], key('post-'.$post->id))
+      @empty
+        <p class="font-bold flex justify-center">No Posts Found</p>
+      @endforelse
     </section>
   </aside>
 

@@ -4,7 +4,7 @@
         <x-avatar wire:ignore src="https://imgs.search.brave.com/C7ZIjfosJDy_SzqTCEKb6rqC43X2SMHqL-ZFb64IWxc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDU2MDk4/MzkucG5n" class="h-9 w-9" />
         <div class="grid grid-cols-7 w-full gap-2">
             <div class="col-span-5">
-                <h5 class="font-semibold truncate text-sm"> {{fake()->name()}} </h5>
+                <h5 class="font-semibold truncate text-sm"> {{$post->user->name}} </h5>
             </div>
             <div class="col-span-2 flex text-right justify-end">
                 <button class="text-gray-500 ml-auto">
@@ -37,14 +37,23 @@
         });
         
         " class="swiper h-[500px] border bg-white">
-            <div x-cloak class="swiper-wrapper">
-                <div class="swiper-slide">@include('components.video',['controls' => true])</div>
-                <div class="swiper-slide">
-                    <img src="https://cdn.pixabay.com/photo/2020/01/22/07/33/hot-4784635_1280.jpg" alt="" class="h-[500px] w-full block object-scale-down">
-                </div>
-                <div class="swiper-slide">Slide 3</div>
-            </div>
+            <ul x-cloak class="swiper-wrapper">
+                @foreach ($post->media as $file)
+                <li class="swiper-slide">
+                @switch($file->mime)
+                    @case('video')
+                        @include('components.video',['source' => $file->url])
+                        @break
+                    @case('image')
+                        <img src="{{$file->url}}" alt="" class="h-[500px] w-full block object-scale-down">
+                        @break
+                    @default
+                @endswitch
+                @endforeach
+                </li>
+            </ul>
             <div class="swiper-pagination"></div>
+            @if (count($post->media) > 1)
             <div class="swiper-button-prev absolute top-1/2 z-10 p-2 cursor-pointer">
                 <div class=" bg-white/95 border p-1 rounded-full text-gray-900">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.8"
@@ -61,7 +70,7 @@
                     </svg>
                 </div>
             </div>
-
+            @endif
             <div class="swiper-scrollbar"></div>
         </main>
         <footer>
@@ -118,8 +127,8 @@
 
             {{-- name and comment --}}
             <div class="flex text-sm gap-2 font-medium">
-                <p> <strong class="font-bold">{{fake()->name()}} </strong>
-                    {{fake()->text()}}
+                <p> <strong class="font-bold">{{$post->user->name}} </strong>
+                    {{$post->user->description}}
                 </p>
             </div>
 
