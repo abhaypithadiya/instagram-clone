@@ -128,7 +128,7 @@
             {{-- name and comment --}}
             <div class="flex text-sm gap-2 font-medium">
                 <p> <strong class="font-bold">{{$post->user->name}} </strong>
-                    {{$post->user->description}}
+                    {{$post->description}}
                 </p>
             </div>
 
