@@ -133,7 +133,7 @@
             </div>
 
             {{-- view post modal --}}
-            <button onclick="Livewire.dispatch('openModal',{component:'post.view.modal',arguments:{'post':1}})"
+            <button onclick="Livewire.dispatch('openModal',{component:'post.view.modal',arguments:{'post': {{$post->id}}}})"
                 class="text-slate-500/90 text-sm font-medium"> View all 12 comments </button>
 
             {{-- show comments for auth --}}

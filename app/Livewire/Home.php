@@ -10,6 +10,12 @@ class Home extends Component
 {
     public $posts;
 
+    #[On('closeModal')]
+    public function revertUrl()
+    {
+        $this->js("history.replaceState({},'','/')");
+    }
+
     #[On('post-created')]
     public function postCreated($id)
     {
