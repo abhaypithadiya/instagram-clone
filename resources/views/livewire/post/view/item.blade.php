@@ -1,9 +1,6 @@
 <div class="grid lg:grid-cols-12 gap-3 h-full w-full overflow-hidden">
 
     <aside class=" hidden lg:flex lg:col-span-7 m-auto items-center w-full overflow-scroll">
-
-
-        {{-- Css snap scroll --}}
         <div
             class="relative flex overflow-x-scroll overscroll-contain w-[500px] selection:snap-x snap-mandatory gap-2 px-2">
             @foreach ($post->media as $key =>$file)
