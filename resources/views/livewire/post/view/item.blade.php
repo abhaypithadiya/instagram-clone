@@ -28,6 +28,14 @@
             </div>
         </header>
 
+        <main>
+            @for ($i = 0; $i < 10; $i++)
+            <section class="flex flex-col gap-2">
+                @include('livewire.post.view.partials.comment')
+            </section>
+            @endfor
+        </main>
+
         {{-- footer --}}
         <footer class="mt-auto sticky border-t bottom-0 z-10 bg-white">
 
