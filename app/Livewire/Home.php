@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use App\Models\Post;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class Home extends Component
+final class Home extends Component
 {
     public $posts;
 
@@ -25,7 +27,7 @@ class Home extends Component
 
     public function mount()
     {
-        $this->posts = Post::latest()->get();
+        $this->posts = Post::with('comments')->latest()->get();
     }
 
     public function render()
