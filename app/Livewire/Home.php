@@ -12,6 +12,12 @@ final class Home extends Component
 {
     public $posts;
 
+    public $canLoadMore;
+
+    public $perPageIncrements = 5;
+
+    public $perPage = 10;
+
     #[On('closeModal')]
     public function revertUrl()
     {
@@ -27,11 +33,32 @@ final class Home extends Component
 
     public function mount()
     {
-        $this->posts = Post::with('comments')->latest()->get();
+        $this->loadPosts();
     }
 
     public function render()
     {
         return view('livewire.home');
+    }
+
+    public function loadMore()
+    {
+        if (! $this->canLoadMore) {
+            return null;
+        }
+
+        $this->perPage += $this->perPageIncrements;
+        $this->loadPosts();
+    }
+
+    public function loadPosts()
+    {
+
+        $this->posts = Post::with('comments.replies')
+            ->latest()
+            ->take($this->perPage)->get();
+
+        $this->canLoadMore = (count($this->posts) >= $this->perPage);
+
     }
 }

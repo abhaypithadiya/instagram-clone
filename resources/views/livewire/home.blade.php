@@ -1,4 +1,19 @@
-<div class="w-full h-full">
+<div x-data="{
+
+canLoadMore:@entangle('canLoadMore')
+
+}" @scroll.window.trottle="
+
+scrollTop= window.scrollY ||window.scrollTop;
+divHeight= window.innerHeight||document.documentElement.clientHeight;
+scrollHeight = document.documentElement.scrollHeight;
+
+isScrolled= scrollTop+ divHeight >= scrollHeight-1;
+
+if(isScrolled && canLoadMore){
+  @this.loadMore();
+}" 
+class="w-full h-full">
 
 {{-- Header --}}
 <header class="md:hidden sticky top-0 z-50 bg-white">
@@ -37,7 +52,7 @@
       </ul>
     </section>
     <section class="mt-5 p-2 space-y-4">
-      @forelse ($posts->take(10) as $post)
+      @forelse ($posts as $post)
         @livewire('post.item',['post' => $post], key('post-'.$post->id))
       @empty
         <p class="font-bold flex justify-center">No Posts Found</p>
