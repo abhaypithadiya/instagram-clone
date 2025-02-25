@@ -25,15 +25,34 @@
                 <div class="col-span-5">
                     <h5 class="font-semibold truncate text-sm">{{$post->user->name}} </h5>
                 </div>
+                <div class="flex col-span-2 text-right justify-end">
+                    <button wire:click="$dispatch('closeModal')" class="text-gray-500 ml-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.9"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </header>
 
         <main>
-            @for ($i = 0; $i < 10; $i++)
+            @if ($comments)
+            @foreach ($comments as $comment)
             <section class="flex flex-col gap-2">
+                {{-- main comment --}}
                 @include('livewire.post.view.partials.comment')
+                @if ($comment->replies)
+                    @foreach ($comment->replies as $reply )
+                        {{-- Reply --}}
+                        @include('livewire.post.view.partials.reply')
+                    @endforeach
+                @endif
             </section>
-            @endfor
+            @endforeach
+            @else
+            No comments 
+            @endif
         </main>
 
         {{-- footer --}}
