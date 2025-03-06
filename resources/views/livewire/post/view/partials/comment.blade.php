@@ -1,18 +1,20 @@
-<div wire:key="comment-{{rand(1,100)}}" class="flex items-center gap-3 py-2">
-    <x-avatar wire:ignore src="https://imgs.search.brave.com/C7ZIjfosJDy_SzqTCEKb6rqC43X2SMHqL-ZFb64IWxc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDU2MDk4/MzkucG5n" class="h-9 w-9 mb-auto" />
+<div wire:key="comment-{{$comment->id}}" class="flex items-center gap-3 py-2">
+    <x-avatar wire:ignore   src="https://source.unsplash.com/500x500?face-{{rand(1,10)}}" class="h-9 w-9 mb-auto" />
+
     <div class="grid grid-cols-7 w-full gap-2">
         {{-- comment  --}}
         <div class="col-span-6 flex flex-wrap text-sm">
             <p>
-                <span class="font-bold text-sm"> {{fake()->name()}} </span>
-                {{fake()->text()}}
+                <span class="font-bold text-sm"> {{$comment->user->name}} </span>
+                {{$comment->body}}
             </p>
         </div>
 
         {{-- like --}}
         <div class="col-span-1 flex text-right justify-end mb-auto">
             <button class="font-bold text-sm ml-auto">
-                <span wire:click='toggleCommentLike({{rand(1,100)}})'>
+                {{-- svg --}}
+                <span wire:click='toggleCommentLike({{$comment->id}})'>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.9"
                         stroke="currentColor" class="w-3 h-3">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -24,11 +26,13 @@
 
         {{-- footer --}}
         <div class="col-span-7 flex gap-2 text-sm items-center text-gray-700">
-            <span> {{fake()->date()}}</span>
+            <span> {{$comment->created_at->diffForHumans()}}</span>
             <span class="font-bold">
-                {{rand(1,100)}} likes
+                @if ($comment->totalLikers>0 && !$comment->hide_like_view)
+                {{$comment->totalLikers}} {{$comment->totalLikers>1? 'likes':'like'}}
+               @endif
             </span>
-            <button wire:click="setParent({{rand(1,100)}})" class="font-semibold">Reply</button>
+            <button wire:click="setParent({{$comment->id}})" class="font-semibold">Reply</button>
         </div>
     </div>
 </div>
