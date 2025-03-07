@@ -137,13 +137,14 @@
                 class="text-slate-500/90 text-sm font-medium"> View all {{$post->comments->count()}} comments </button>
 
             {{-- show comments for auth --}}
+            @auth
             <ul class="my-2">
-                @for ($i = 0; $i < 3; $i++)
+                @foreach ($post->comments()->where('user_id',auth()->id())->get() as $comment)
                     <li class="grid grid-cols-12 text-sm items-center">
-                    <span class="font-bold col-span-3 mb-auto">{{fake()->name()}} </span>
-                    <span class="col-span-8">{{fake()->text()}} </span>
+                    <span class="font-bold col-span-3 mb-auto">{{auth()->user()->name}} </span>
+                    <span class="col-span-8">{{$comment->body}} </span>
                     <button class="col-span-1 mb-auto flex justify-end pr-px">
-                        <span wire:click='toggleCommentLike(1)'>
+                        <span wire:click='toggleCommentLike({{$comment->id}})'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.9"
                                 stroke="currentColor" class="w-3 h-3">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -153,8 +154,9 @@
                         </span>
                     </button>
                     </li>
-                    @endfor
+                @endforeach
             </ul>
+            @endauth
 
             {{-- leave comment --}}
             <form wire:key='{{time()}}' @submit.prevent="$wire.addComment()" x-data="{body:@entangle('body')}"
