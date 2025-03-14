@@ -135,7 +135,9 @@
             </div>
 
             {{-- likes and views --}}
-            <p class="font-bold text-sm">1234 likes</p>
+            @if ($post->totalLikers>0 && !$post->hide_like_view)
+            <p class="font-bold text-sm">{{$post->totalLikers}} {{$post->totalLikers>1? 'likes':'like'}}</p>
+            @endif
 
             {{-- name and comment --}}
             <div class="flex text-sm gap-2 font-medium">
