@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Overtrue\LaravelFavorite\Traits\Favoriteable;
 use Overtrue\LaravelLike\Traits\Likeable;
 
 final class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
-    use HasFactory, Likeable;
+    use Favoriteable, HasFactory, Likeable;
 
     protected $guarded = [];
 
