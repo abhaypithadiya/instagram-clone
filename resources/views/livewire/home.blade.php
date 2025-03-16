@@ -69,23 +69,27 @@ class="w-full h-full">
     </div>
     <section class="mt-4">
         <h4 class="font-bold text-gray-700/95">Suggestions for you </h4>
-        <ul class="my-2 space-y-3">
-            @for ($i=0;$i<5;$i++)                
+        <ul class="my-2 space-y-3">            
+            @foreach ($suggestedUsers as $key=> $user)
             <li class="flex items-center gap-3">
-              <a href="javascript:void(0)" >
+              <a  href="{{route('profile.home',$user->username)}}" >
                 <x-avatar wire:ignore src="https://imgs.search.brave.com/sJ1ac6WsghAy3PGvgm85rEJULE_LS2b6nZG3RZrir4M/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dGFsZW50dmlldy5j/b20vd3AtY29udGVu/dC91cGxvYWRzL0Zl/YXR1cmVkLUltYWdl/LU1ha2VyLTUwMHg1/MDAtNi5wbmc" class="w-12 h-12" />
               </a>
               <div class="grid grid-cols-7 w-full gap-2">
                 <div class="col-span-5">
-                  <a href="javascript:void(0)" class="font-semibold truncate text-sm">{{fake()->name}}</a>
+                  <a href="{{route('profile.home',$user->username)}}" class="font-semibold truncate text-sm">{{$user->name}}</a>
                   <p class="text-xs truncate" wire:ignore> Followed by {{fake()->name}} </p>
                 </div>
                 <div class="col-span-2 flex text-right justify-end">
-                  <button class="font-bold text-blue-500 ml-auto text-sm">Follow</button> 
+                  @if (auth()->user()->isFollowing($user))
+                  <button wire:click="toggleFollow({{$user->id}})" class="font-bold text-blue-500 ml-auto text-sm">Following</button>
+                  @else
+                  <button wire:click="toggleFollow({{$user->id}})" class="font-bold text-blue-500 ml-auto text-sm">Follow</button>
+                  @endif
                 </div>
               </div>
             </li>
-            @endfor
+            @endforeach
         </ul>
     </section>
     <section class="mt-10">
