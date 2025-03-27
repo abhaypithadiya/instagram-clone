@@ -159,7 +159,7 @@
         </li>
         @auth
         <li>
-            <a wire:navigate href="javascript:void(0)" class="flex items-center gap-5">
+            <a wire:navigate href="{{route('profile.home', auth()->user()->username)}}" class="flex items-center gap-5">
                 <x-avatar src="https://source.unsplash.com/400x400?face" class=" w-7 h-7 shrink-0" />
 
                 <h4 x-cloak x-show="!(shrink||drawer)"
