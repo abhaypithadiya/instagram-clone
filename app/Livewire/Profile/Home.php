@@ -2,12 +2,25 @@
 
 namespace App\Livewire\Profile;
 
+use App\Models\User;
 use Livewire\Component;
 
 class Home extends Component
 {
+    public $user;
+
+    public function mount($user)
+    {
+
+        $this->user = User::whereUsername($user)->withCount(['followers', 'followings', 'posts'])->firstOrFail();
+    }
+
     public function render()
     {
-        return view('livewire.profile.home');
+        $this->user = User::whereUsername($this->user->username)->withCount(['followers', 'followings', 'posts'])->firstOrFail();
+
+        $posts = $this->user->posts()->where('type', 'post')->get();
+
+        return view('livewire.profile.home', ['posts' => $posts]);
     }
 }
