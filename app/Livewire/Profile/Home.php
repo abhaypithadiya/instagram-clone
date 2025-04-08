@@ -9,6 +9,12 @@ class Home extends Component
 {
     public $user;
 
+    public function toggleFollow()
+    {
+        abort_unless(auth()->check(), 401);
+        auth()->user()->toggleFollow($this->user);
+    }
+
     public function mount($user)
     {
 
