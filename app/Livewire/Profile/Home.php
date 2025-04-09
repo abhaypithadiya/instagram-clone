@@ -3,11 +3,18 @@
 namespace App\Livewire\Profile;
 
 use App\Models\User;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Home extends Component
 {
     public $user;
+
+    #[On('closeModal')]
+    public function revertUrl()
+    {
+        $this->js("history.replaceState({},'','/')");
+    }
 
     public function toggleFollow()
     {
